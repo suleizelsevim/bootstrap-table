@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="./lib/css/bootstrap.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css" />
+		<link
+			href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css"
+			rel="stylesheet" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div id="appDiv" class="container-fluid">
+			<!-- <label id="lbl">alalalalala</label> -->
+			<div class="row">
+				<!-- <div class="col-4" id="form-name">
+					<input
+						type="text"
+						placeholder="adınız"
+						id="form-input-name"
+						class="textbox" />
+				</div>
+				<div class="col-4">
+					<input
+						type="text"
+						placeholder="soyadınız"
+						id="form-input-surname"
+						class="textbox" />
+				</div> -->
+			</div>
+
+			<div class="row header">
+				<div class="button-div">
+					<div class="button-inner-div">
+						<button class="sil-buton" id="delete-button">Sil</button>
+						<button class="duzenle-buton" id="edit-button">Düzenle</button>
+					</div>
+				</div>
+
+				<div class="col-4">
+					<!-- <button id="getir-btn" class="btn btn-danger">getir</button> -->
+					<button
+						class="btn btn-rounded text-white blue darken-3 btn-sm add-bubble-edit"
+						type="button"
+						disabled>
+						<i class="fas fa-toggle-off"> </i>
+					</button>
+				</div>
+				<div class="col-4">
+					<!-- <button id="btn-save" class="btn btn-success">kaydet</button>
+					<button id="toggle-btn" class="btn btn-warning">gizle/göster</button> -->
+
+					<label for="seciniz" style="display: none">Alan filtreleme</label>
+					<select class="form-select" id="select-section" style="display: none">
+						<option class="dropdown-item" value="seciniz" disabled selected>
+							seçiniz
+						</option>
+
+						<option value="userId">userId</option>
+						<option value="id">id</option>
+						<option value="title">title</option>
+						<option value="completed">completed</option>
+					</select>
+
+					<input
+						class="form-control"
+						id="search"
+						type="text"
+						style="display: none" />
+					<button value="btnn" id="search-btn" style="display: none">
+						ara
+					</button>
+				</div>
+			</div>
+
+			<div class="outer-form-div">
+				<div class="form-div" id="edit-popup" style="display: none">
+					<button class="btn-close close-button"></button>
+					<form id="form" class="form">
+						<div class="form-input-div">
+							<label for="userId">user Id</label>
+							<input name="userId" type="number" id="userId-input" />
+						</div>
+
+						<div class="form-input-div">
+							<label for="id">id</label>
+							<input type="number" name="id" id="id-input" />
+						</div>
+
+						<div class="form-input-div">
+							<label for="title">title</label>
+							<input type="text" name="title" id="title-input" />
+						</div>
+
+						<div class="form-input-div input-completed form-switch">
+							<label for="completed">completed</label>
+							<input
+								class="form-check-input"
+								type="checkbox"
+								name="completed"
+								id="completed-input" />
+						</div>
+
+						<div class="form-input-div tamam-buton">
+							<button type="submit" class="tamam-butonu" id="tamam-btn">
+								Tamam
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="row form-row">
+				<div class="container-fluid">
+					<h2>To-do List</h2>
+				</div>
+
+				<table id="table" class="table table-hover table-bordered">
+					<thead>
+						<tr>
+							<th data-field="state" data-checkbox="true"></th>
+
+							<th
+								data-field="userId"
+								data-align="center"
+								data-width="20"
+								data-sortable="true">
+								User Id
+							</th>
+							<th
+								data-field="id"
+								data-align="center"
+								data-width="50"
+								data-sortable="true">
+								Id
+							</th>
+							<th data-field="title" data-width="300" data-sortable="true">
+								Title
+							</th>
+							<th
+								data-field="completed"
+								data-align="center"
+								data-width="50"
+								data-sortable="true">
+								Completed
+							</th>
+						</tr>
+					</thead>
+					<tbody id="table-body"></tbody>
+				</table>
+				<!-- <table id="table"></table> -->
+			</div>
+		</div>
+		<script src="./lib/js/bootstrap.js"></script>
+		<script src="./lib/js/jquery.min.js"></script>
+		<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+		<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+	</body>
+	<script>
+		var tblData = [];
+		var idxArray = [];
+
+		function setData(dataarr) {
+			$("#table").bootstrapTable({
+				data: dataarr,
+				pagination: true,
+				search: true,
+				autoRefreshStatus: true,
+				columns: [{}, {}, {}, {}, {}],
+			});
+		}
+
+		function loadData() {
+			$.get("./veritabani.json", function (data) {
+				tblData = data;
+				setData(data);
+			});
+		}
+
+		window.onload = function () {
+			loadData();
+		};
+
+		$(".close-button").on("click", function () {
+			$("#edit-popup").css("display", "none");
+		});
+
+		$("#btn-save").on("click", function () {
+			var adField = $("#form-input-name").val();
+			var soyadField = $("#form-input-surname").val();
+			var tblbody = $("#table-body");
+
+			var trElement = document.createElement("tr");
+			var tdElement = document.createElement("td");
+			tdElement.innerText = adField;
+			trElement.appendChild(tdElement);
+			var td2Element = document.createElement("td");
+			td2Element.innerText = soyadField;
+			trElement.appendChild(td2Element);
+			tblbody.append(trElement);
+		});
+
+		// $("#getir-btn").on("click", function () {
+		// 	// debugger;
+
+		// 	// 	for (let index = 0; index < veri.length; index++) {
+		// 	// 		var element = veri[index];
+		// 	// 		var tblbody2 = $("#table-body");
+
+		// 	// 		var trE = document.createElement("tr");
+		// 	// 		var tdUserid = document.createElement("td");
+		// 	// 		tdUserid.innerText = element.userId;
+
+		// 	// 		var tdId = document.createElement("td");
+		// 	// 		tdId.innerText = element.id;
+
+		// 	// 		var tdTitle = document.createElement("td");
+		// 	// 		tdTitle.innerText = element.title;
+
+		// 	// 		var tdCompleted = document.createElement("td");
+		// 	// 		tdCompleted.innerText = element.completed;
+
+		// 	// 		trE.appendChild(tdUserid);
+		// 	// 		trE.appendChild(tdId);
+		// 	// 		trE.appendChild(tdTitle);
+		// 	// 		trE.appendChild(tdCompleted);
+
+		// 	// 		tblbody2.append(trE);
+		// 	// 	}
+		// 	var tblbody3 = $("#table-body");
+		// 	// var temp = veri.map(function (a) {
+		// 	// 	var tr1 = document.createElement("tr");
+
+		// 	// 	var td1 = document.createElement("td");
+		// 	// 	td1.innerText = a.userId;
+
+		// 	// 	var td2 = document.createElement("td");
+		// 	// 	td2.innerText = a.id;
+
+		// 	// 	var td3 = document.createElement("td");
+		// 	// 	td3.innerText = a.title;
+
+		// 	// 	var td4 = document.createElement("td");
+		// 	// 	td4.innerText = a.completed;
+
+		// 	// 	tr1.append(td1);
+		// 	// 	tr1.appendChild(td2);
+		// 	// 	tr1.append(td3);
+		// 	// 	tr1.append(td4);
+
+		// 	// 	tblbody3.append(tr1);
+		// 	// });
+		// });
+
+		$("#edit-button").attr("disabled", true);
+		$("#delete-button").attr("disabled", true);
+
+		$("#table").on("change", function () {
+			var bb = $.map(
+				$("#table").bootstrapTable("getSelections"),
+				function (i, index) {
+					console.log("inx", index);
+					return i.id;
+				}
+			);
+			idxArray = bb;
+		});
+
+		$("#table").on("change", function () {
+			var aa = $.map(
+				$("#table").bootstrapTable("getSelections"),
+				function (row) {
+					return row.id;
+				}
+			);
+
+			var count = 0;
+
+			$.each(aa, function (index, value) {
+				count += 1;
+			});
+			if (count > 1) {
+				$("#edit-button").attr("disabled", true);
+				$("#delete-button").attr("disabled", false);
+			} else if (count == 0) {
+				$("#edit-button").attr("disabled", true);
+				$("#delete-button").attr("disabled", true);
+			} else {
+				$("#edit-button").attr("disabled", false);
+				$("#delete-button").attr("disabled", false);
+			}
+			//seçildiyse push, seçim kaldırıldıysa pop
+		});
+
+		$("#edit-button").on("click", function () {
+			idx = $("[name=btSelectItem]:checked").attr("data-index");
+			console.log("aa", idx);
+			$("#id-input").val(tblData[idx].id);
+			$("#userId-input").val(tblData[idx].userId);
+
+			var titleStorage = $("#title-input").val(tblData[idx].title);
+			localStorage.setItem("title", titleStorage);
+			var deneme = localStorage.getItem("title");
+			console.log("deneme", deneme);
+
+			isChecked = true;
+
+			tblData[idx].completed == true ? (isChecked = true) : (isChecked = false);
+
+			$("#completed-input").css("checked", isChecked);
+
+			$("#edit-popup").removeAttr("style");
+			$("#form").removeAttr("style");
+			console.log("düzenle", tblData);
+		});
+
+		$("#form").on("submit", function (event) {
+			event.preventDefault();
+			idx = $("[name=btSelectItem]:checked").attr("data-index");
+
+			tblData[idx].title = $("#title-input").val();
+
+			$("#completed-input").is(":checked")
+				? (tblData[idx].completed = true)
+				: (tblData[idx].completed = false);
+
+			tblData[idx].userId = $("#userId-input").val();
+
+			tblData[idx].id = $("#id-input").val();
+
+			$("#edit-popup").css("display", "none");
+
+			$("#table").bootstrapTable("destroy");
+			$("#edit-button").attr("disabled", true);
+			$("#delete-button").attr("disabled", true);
+			setData(tblData);
+		});
+
+		$("#delete-button").on("click", function () {
+			idx = $("[name=btSelectItem]:checked").attr("data-index");
+			console.log("idx", idx);
+
+			var ids = $.map(
+				$("#table").bootstrapTable("getSelections"),
+				function (row) {
+					return row.id;
+				}
+			);
+
+			$("#table").bootstrapTable("remove", {
+				field: "id",
+				values: ids,
+			});
+
+			tblData = tblData.filter(function (item) {
+				return !idxArray.includes(item.id);
+			});
+
+			$("#edit-button").attr("disabled", true);
+			$("#delete-button").attr("disabled", true);
+		});
+
+		$("#search-btn").on("click", function () {
+			var arama = $("#search").val();
+
+			var selectedValue = $("#select-section option:selected").val();
+			var tblbody4 = $("#table-body");
+			tblbody4.empty();
+
+			var istedigimizVeri = tblData.filter(function (a) {
+				if (selectedValue == "completed") {
+					return a[selectedValue] == Boolean(arama);
+				} else if (selectedValue == "title") {
+					return a[selectedValue].includes(arama);
+				} else {
+					return a[selectedValue] == arama;
+				}
+			});
+
+			var temp = istedigimizVeri.map(function (a) {
+				var tr5 = document.createElement("tr");
+				var aa = document.createElement("td");
+				var td6 = document.createElement("td");
+				td6.innerText = a.userId;
+
+				var td7 = document.createElement("td");
+				td7.innerText = a.id;
+
+				var td8 = document.createElement("td");
+				td8.innerText = a.title;
+
+				var td9 = document.createElement("td");
+				td9.innerText = a.completed;
+				tr5.appendChild(aa);
+				tr5.appendChild(td6);
+				tr5.appendChild(td7);
+				tr5.appendChild(td8);
+				tr5.appendChild(td9);
+
+				tblbody4.append(tr5);
+			});
+		});
+	</script>
+</html>

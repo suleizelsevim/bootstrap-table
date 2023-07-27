@@ -1,0 +1,226 @@
+body {
+  background-color: #f6f4f6;
+}
+body .container-fluid .header {
+  height: 13vh;
+  position: absolute;
+  margin-top: 92vh;
+}
+body .container-fluid .header .button-div {
+  display: flex;
+  gap: 1rem;
+  position: fixed;
+  height: 3.2rem;
+  width: 100vw;
+  background-color: #61707D;
+  align-items: center;
+  z-index: 6;
+}
+body .container-fluid .header .button-div .button-inner-div {
+  width: 16vw;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+body .container-fluid .header .button-div .button-inner-div .sil-buton {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 8px;
+  width: 5rem;
+  height: 2rem;
+  color: white;
+  background-color: #FF1654;
+  border: none;
+  z-index: 6;
+}
+body .container-fluid .header .button-div .button-inner-div .sil-buton:hover {
+  background-color: #F50041;
+}
+body .container-fluid .header .button-div .button-inner-div .sil-buton:disabled {
+  background-color: #FF4778;
+  z-index: 6;
+}
+body .container-fluid .header .button-div .button-inner-div .duzenle-buton {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 8px;
+  width: 5rem;
+  height: 2rem;
+  color: white;
+  background-color: #88C1E7;
+  border: none;
+  z-index: 6;
+}
+body .container-fluid .header .button-div .button-inner-div .duzenle-buton:hover {
+  background-color: #67AFE0;
+}
+body .container-fluid .header .button-div .button-inner-div .duzenle-buton:disabled {
+  background-color: #adcce1;
+  z-index: 6;
+}
+body .container-fluid .outer-form-div {
+  display: flex;
+  justify-content: center;
+}
+body .container-fluid .outer-form-div .form-div {
+  display: grid;
+  position: fixed;
+  z-index: 4;
+  background-color: #CCE4F5;
+  height: 81vh;
+  width: 37vw;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 16px;
+  margin-top: 2rem;
+}
+body .container-fluid .outer-form-div .form-div .close-button {
+  margin: 1rem;
+  margin-left: 26rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: transparent;
+  border: none;
+}
+body .container-fluid .outer-form-div .form-div .close-button:focus {
+  box-shadow: none;
+}
+body .container-fluid .outer-form-div .form-div .form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin: auto;
+  margin-top: -2rem;
+}
+body .container-fluid .outer-form-div .form-div .form .form-input-div {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+body .container-fluid .outer-form-div .form-div .form .form-input-div label {
+  margin-left: 1.1rem;
+}
+body .container-fluid .outer-form-div .form-div .form .form-input-div input[type=text] {
+  width: 14rem;
+  margin: 1rem;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 4px;
+  padding-left: 12px;
+}
+body .container-fluid .outer-form-div .form-div .form .form-input-div input[type=number] {
+  width: 14rem;
+  margin: 1rem;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 4px;
+  padding-left: 12px;
+}
+body .container-fluid .outer-form-div .form-div .form .input-completed {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+body .container-fluid .outer-form-div .form-div .form .input-completed label {
+  margin-left: -1.6rem;
+}
+body .container-fluid .outer-form-div .form-div .form .input-completed input[type=checkbox] {
+  margin: 1rem;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 4px;
+  padding-left: 12px;
+  margin-left: 7rem;
+  box-shadow: none;
+}
+body .container-fluid .outer-form-div .form-div .form .input-completed input[type=checkbox]:checked {
+  background-color: #9593e3;
+}
+body .container-fluid .outer-form-div .form-div .form .tamam-buton {
+  margin: auto;
+  margin-top: 2rem;
+}
+body .container-fluid .outer-form-div .form-div .form .tamam-buton .tamam-butonu {
+  width: 8rem;
+  height: 2.3rem;
+  border-radius: 16px;
+  background-color: #82D9CF;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+body .container-fluid .outer-form-div .form-div .form .tamam-buton .tamam-butonu:hover {
+  background-color: #73D4C9;
+}
+body .form-row {
+  margin: 3rem 7rem 8rem 7rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0px 2px 1px 0px rgba(0, 0, 0, 0.11);
+  border-radius: 1rem;
+}
+body .form-row .container-fluid {
+  position: absolute;
+  width: 80vw;
+}
+body .form-row .container-fluid h2 {
+  text-align: center;
+  margin-top: 1rem;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 35px;
+}
+body .bootstrap-table .fixed-table-toolbar .float-right {
+  margin-right: 0.4rem;
+}
+body .bootstrap-table .fixed-table-toolbar .form-control {
+  border-radius: 2rem;
+  z-index: 4;
+  margin-top: 0.2rem;
+}
+body .bootstrap-table .fixed-table-toolbar .form-control:focus {
+  box-shadow: none;
+  border: 1px solid rgb(212, 212, 212);
+}
+body .bootstrap-table .fixed-table-container {
+  border-radius: 1rem;
+}
+body .bootstrap-table .fixed-table-container .fixed-table-body {
+  padding: 1rem 0.5rem 1rem 0.5rem;
+}
+body .bootstrap-table .fixed-table-pagination .pagination-detail {
+  display: none;
+}
+body .bootstrap-table .fixed-table-pagination .pagination {
+  color: #596773;
+}
+body .bootstrap-table .fixed-table-pagination .pagination .page-link {
+  z-index: 2;
+  color: #596773;
+}
+body .bootstrap-table .fixed-table-pagination .pagination .page-link:hover {
+  z-index: 2;
+  color: #596773;
+}
+body .bootstrap-table .fixed-table-pagination .pagination .page-link.active, body .bootstrap-table .fixed-table-pagination .pagination .active > .page-link {
+  background-color: #596773;
+  border-color: #596773;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}/*# sourceMappingURL=style.css.map */
