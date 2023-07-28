@@ -12,6 +12,7 @@
 			href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css"
 			rel="stylesheet" />
 		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="bootstrap-editable.css" />
 	</head>
 	<body>
 		<div id="appDiv" class="container-fluid">
@@ -102,7 +103,8 @@
 								class="form-check-input"
 								type="checkbox"
 								name="completed"
-								id="completed-input" />
+								id="completed-input"
+								checked="true" />
 						</div>
 
 						<div class="form-input-div tamam-buton">
@@ -138,7 +140,11 @@
 								data-sortable="true">
 								Id
 							</th>
-							<th data-field="title" data-width="300" data-sortable="true">
+							<th
+								data-field="title"
+								data-width="300"
+								data-editable="true"
+								data-sortable="true">
 								Title
 							</th>
 							<th
@@ -159,27 +165,45 @@
 		<script src="./lib/js/jquery.min.js"></script>
 		<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
 		<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+		<script src="extensions/editable/bootstrap-table-editable.js"></script>
+		<script src="./lib/js/bootstrap-editable.js"></script>
 	</body>
 	<script>
 		var tblData = [];
+		var myLocalStorage;
 		var idxArray = [];
+
+		var pagination = 1;
+		function loadData() {
+			$.get("./veritabani.json", function (data) {
+				tblData = data;
+				var pagination = $("#table").bootstrapTable("getOptions").pageNumber;
+				setData(data);
+				var serialData = JSON.stringify(data);
+				localStorage.setItem("myLocalStorage", data[0]);
+			});
+		}
 
 		function setData(dataarr) {
 			$("#table").bootstrapTable({
 				data: dataarr,
 				pagination: true,
+				dataPageNumber: pagination,
 				search: true,
-				autoRefreshStatus: true,
+				// autoRefreshStatus: true,
 				columns: [{}, {}, {}, {}, {}],
+				onPageChange: function () {
+					pagination = $("#table").bootstrapTable("getOptions").pageNumber;
+					console.log(pagination);
+				},
 			});
+			$("#table").bootstrapTable("selectPage", pagination);
+			$(".page-item .page-link:contains('" + pagination + "'):first").addClass(
+				"active"
+			);
 		}
 
-		function loadData() {
-			$.get("./veritabani.json", function (data) {
-				tblData = data;
-				setData(data);
-			});
-		}
+		console.log(localStorage);
 
 		window.onload = function () {
 			loadData();
@@ -263,10 +287,10 @@
 			var bb = $.map(
 				$("#table").bootstrapTable("getSelections"),
 				function (i, index) {
-					console.log("inx", index);
 					return i.id;
 				}
 			);
+			idx = $("[name=btSelectItem]:checked").attr("data-index");
 			idxArray = bb;
 		});
 
@@ -293,36 +317,34 @@
 				$("#edit-button").attr("disabled", false);
 				$("#delete-button").attr("disabled", false);
 			}
-			//seçildiyse push, seçim kaldırıldıysa pop
 		});
 
 		$("#edit-button").on("click", function () {
-			idx = $("[name=btSelectItem]:checked").attr("data-index");
-			console.log("aa", idx);
 			$("#id-input").val(tblData[idx].id);
 			$("#userId-input").val(tblData[idx].userId);
 
 			var titleStorage = $("#title-input").val(tblData[idx].title);
 			localStorage.setItem("title", titleStorage);
 			var deneme = localStorage.getItem("title");
-			console.log("deneme", deneme);
 
-			isChecked = true;
+			isChecked = Boolean;
 
 			tblData[idx].completed == true ? (isChecked = true) : (isChecked = false);
 
-			$("#completed-input").css("checked", isChecked);
+			$("#completed-input").attr("checked", isChecked);
 
 			$("#edit-popup").removeAttr("style");
 			$("#form").removeAttr("style");
-			console.log("düzenle", tblData);
 		});
 
 		$("#form").on("submit", function (event) {
 			event.preventDefault();
-			idx = $("[name=btSelectItem]:checked").attr("data-index");
 
 			tblData[idx].title = $("#title-input").val();
+
+			$("#completed-input").is(":checked")
+				? (tblData[idx].completed = true)
+				: (tblData[idx].completed = false);
 
 			$("#completed-input").is(":checked")
 				? (tblData[idx].completed = true)
@@ -335,15 +357,27 @@
 			$("#edit-popup").css("display", "none");
 
 			$("#table").bootstrapTable("destroy");
-			$("#edit-button").attr("disabled", true);
-			$("#delete-button").attr("disabled", true);
+
 			setData(tblData);
+
+			//şu an aktif olanın textini al
+			//o texte sahip bölümü active yap
+			//
+
+			// if (pagination < 5 || pagination.length == 1) {
+			// 	$(".page-item.active").removeClass("active");
+			// 	$(
+			// 		".page-item .page-link:contains('" + pagination + "'):first"
+			// 	).addClass("active");
+			// } else {
+			// 	$(".page-item.active").removeClass("active");
+			// 	$(".page-item .page-link:contains('" + pagination + "')").addClass(
+			// 		"active"
+			// 	);
+			// }
 		});
 
 		$("#delete-button").on("click", function () {
-			idx = $("[name=btSelectItem]:checked").attr("data-index");
-			console.log("idx", idx);
-
 			var ids = $.map(
 				$("#table").bootstrapTable("getSelections"),
 				function (row) {
@@ -362,6 +396,7 @@
 
 			$("#edit-button").attr("disabled", true);
 			$("#delete-button").attr("disabled", true);
+			$table.bootstrapTable("selectPage", pagination);
 		});
 
 		$("#search-btn").on("click", function () {
