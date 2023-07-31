@@ -25,7 +25,7 @@ body .container-fluid .header .button-div .button-inner-div {
 }
 body .container-fluid .header .button-div .button-inner-div .sil-buton {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border-radius: 8px;
+  border-radius: 16px;
   width: 5rem;
   height: 2rem;
   color: white;
@@ -42,7 +42,7 @@ body .container-fluid .header .button-div .button-inner-div .sil-buton:disabled 
 }
 body .container-fluid .header .button-div .button-inner-div .duzenle-buton {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  border-radius: 8px;
+  border-radius: 16px;
   width: 5rem;
   height: 2rem;
   color: white;
@@ -102,7 +102,8 @@ body .container-fluid .outer-form-div .form-div .form .form-input-div label {
 body .container-fluid .outer-form-div .form-div .form .form-input-div input[type=text] {
   width: 14rem;
   margin: 1rem;
-  border-radius: 6px;
+  height: 2.3rem;
+  border-radius: 18px;
   border: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 4px;
@@ -110,8 +111,9 @@ body .container-fluid .outer-form-div .form-div .form .form-input-div input[type
 }
 body .container-fluid .outer-form-div .form-div .form .form-input-div input[type=number] {
   width: 14rem;
+  height: 2.3rem;
   margin: 1rem;
-  border-radius: 6px;
+  border-radius: 18px;
   border: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 4px;
@@ -127,7 +129,7 @@ body .container-fluid .outer-form-div .form-div .form .input-completed label {
 }
 body .container-fluid .outer-form-div .form-div .form .input-completed input[type=checkbox] {
   margin: 1rem;
-  border-radius: 6px;
+  border-radius: 16px;
   border: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 4px;
